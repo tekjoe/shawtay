@@ -14,6 +14,7 @@ const Features = styled.section`
 Features.Benefit = styled.div`
   text-align: center;
   padding: 4rem 1rem 5rem 1rem;
+  margin-top: -10rem;
   h2 {
     font-weight: bold;
     line-height: 1.2;
@@ -53,6 +54,8 @@ Features.Feature = styled.div`
   }
   @media (min-width: 768px) {
     width: auto;
+    text-align: left;
+    align-items: flex-start;
     &:nth-child(3) {
       margin-top: 2rem;
     }

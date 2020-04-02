@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import Container from "./Container";
 import boostMobile from "../images/bg-boost-desktop.svg";
 
 const Footer = styled.footer``;

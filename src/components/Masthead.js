@@ -8,10 +8,10 @@ const Masthead = styled.section``;
 Masthead.Content = styled.div`
   display: flex;
   flex-direction: column;
-  margin-bottom: 4rem;
+  margin-bottom: 8rem;
   @media (min-width: 768px) {
     flex-direction: row-reverse;
-    margin-bottom: 0;
+    margin-bottom: 6rem;
   }
 `;
 
