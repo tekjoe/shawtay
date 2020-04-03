@@ -135,7 +135,8 @@ const Error = styled.p`
 `;
 
 export default () => {
-  const initialUrls = JSON.parse(localStorage.getItem("shortenedUrls")) || [];
+  const initialUrls = () =>
+    JSON.parse(localStorage.getItem("shortenedUrls")) || [];
   const apiEndpoint = "https://rel.ink/api/links/";
   const [url, setUrl] = useState("");
   const [shortenedUrls, setShortenedUrls] = useState(initialUrls);
@@ -143,7 +144,7 @@ export default () => {
   const handleChange = e => {
     setUrl(e.target.value);
   };
-  const saveToLocalStorage = () => {
+  const saveToLocalStorage = shortenedUrls => {
     const serializedUrls = JSON.stringify(shortenedUrls);
     localStorage.setItem("shortenedUrls", serializedUrls);
   };
@@ -171,8 +172,8 @@ export default () => {
     }
   };
   useEffect(() => {
-    saveToLocalStorage();
-  });
+    saveToLocalStorage(shortenedUrls);
+  }, [shortenedUrls]);
   return (
     <Container>
       <Shortener>
