@@ -6,7 +6,7 @@ import menu from "../images/menu.svg";
 import Container from "./Container";
 
 const Header = styled.header`
-  padding: 2rem 1rem;
+  padding: 2rem;
 `;
 
 const Navbar = styled.nav`
@@ -25,7 +25,7 @@ const MobileNav = styled(motion.nav)`
   color: white;
   font-weight: bold;
   margin-top: 1rem;
-  width: calc(100vw - 2rem);
+  width: calc(100vw - 4rem);
   background: ${({ theme }) => theme.darkViolet};
   ul {
     list-style-type: none;
