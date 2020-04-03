@@ -32,7 +32,7 @@ Masthead.Image = styled.div`
 Masthead.CTA = styled.div`
   text-align: center;
   flex: 1;
-  padding: 2rem 1rem;
+  padding: 2rem;
   h2 {
     font-size: 2.5rem;
     font-weight: bold;

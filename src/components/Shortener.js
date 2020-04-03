@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import background from "../images/bg-shorten-desktop.svg";
@@ -54,6 +54,25 @@ const Input = styled.input`
   }
 `;
 
+const SubmitButton = styled.button`
+  background: ${({ theme }) => theme.cyan};
+  display: inline-block;
+  color: #fafafa;
+  font-weight: bold;
+  font-size: 1.125rem;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  width: 100%;
+  padding: 1rem;
+  &:hover {
+    background: ${({ theme }) => theme.lighterCyan};
+  }
+  @media (min-width: 768px) {
+    width: 20%;
+  }
+`;
+
 const ResultsList = styled.div`
   margin: 2rem 0;
 `;
@@ -87,24 +106,6 @@ ResultsList.Item.ShortenedUrl = styled.div`
   }
 `;
 
-const SubmitButton = styled.button`
-  background: ${({ theme }) => theme.cyan};
-  display: inline-block;
-  color: #fafafa;
-  font-weight: bold;
-  font-size: 1.125rem;
-  border: none;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  width: 100%;
-  padding: 1rem;
-  &:hover {
-    background: ${({ theme }) => theme.lighterCyan};
-  }
-  @media (min-width: 768px) {
-    width: 20%;
-  }
-`;
 const CopyButton = styled.a`
   background: ${({ theme }) => theme.cyan};
   display: inline-block;
@@ -134,12 +135,17 @@ const Error = styled.p`
 `;
 
 export default () => {
+  const initialUrls = JSON.parse(localStorage.getItem("shortenedUrls")) || [];
   const apiEndpoint = "https://rel.ink/api/links/";
   const [url, setUrl] = useState("");
-  const [shortenedUrls, setShortenedUrls] = useState([]);
+  const [shortenedUrls, setShortenedUrls] = useState(initialUrls);
   const [hasErrors, setHasErrors] = useState(false);
   const handleChange = e => {
     setUrl(e.target.value);
+  };
+  const saveToLocalStorage = () => {
+    const serializedUrls = JSON.stringify(shortenedUrls);
+    localStorage.setItem("shortenedUrls", serializedUrls);
   };
   const handleSubmit = e => {
     e.preventDefault();
@@ -154,10 +160,19 @@ export default () => {
       })
       .catch(err => setHasErrors(!hasErrors));
   };
-  const handleCopy = e => {
+  const handleCopy = async e => {
+    const link = e.target.previousElementSibling.innerText;
     e.target.innerText = "Copied!";
     e.target.style.backgroundColor = "hsl(260, 8%, 14%)";
+    try {
+      await navigator.clipboard.writeText(link);
+    } catch (err) {
+      console.error("Failed to copy!", err);
+    }
   };
+  useEffect(() => {
+    saveToLocalStorage();
+  });
   return (
     <Container>
       <Shortener>
